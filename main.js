@@ -40,7 +40,7 @@ board[5][6] = "bpawn"
 board[6][6] = "bpawn"
 board[7][6] = "bpawn"
 
-// Display board
+// Create board
 for (let i = 0; i < 8; i++) {
     let row = document.createElement("div")
     row.className = "row"
@@ -56,16 +56,45 @@ for (let i = 0; i < 8; i++) {
             square.classList.add("black")
         }
 
-        if (board[j][7 - i] != "empty") {
-            let pic = document.createElement("img")
-            pic.src = "pictures/" + board[j][7 - i] + ".png"
-            pic.id = "pic" + square.id
-            pic.className = "piece"
-            square.appendChild(pic)
-            square.style.cursor = "pointer"
-        }
-
         row.appendChild(square)
+    }
+}
+
+// Display board
+displayBoard()
+function displayBoard() {
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            let square = document.getElementById(64 - (-j + (i * 8)) - 7)
+            if (board[j][7 - i] != "empty") {
+                if (!document.getElementById("pic" + square.id)) {
+                    let pic = document.createElement("img")
+                    pic.src = "pictures/" + board[j][7 - i] + ".png"
+                    pic.id = "pic" + square.id
+                    pic.className = "piece"
+                    square.appendChild(pic)
+                    square.style.cursor = "pointer"
+                }
+            }
+
+            if (square.children.length && board[j][7 - i] == "empty") {
+                square.removeChild(document.getElementById("pic" + square.id))
+            }
+
+        }
+    }
+    for (let i = 1; i <= 64; i++) {
+        let temp = document.getElementById(i)
+
+        temp.classList.remove("available")
+        if ((i + Math.floor((i - 1) / 8)) % 2 == 0) {
+            temp.classList.remove("black")
+            temp.classList.add("white")
+        }
+        else {
+            temp.classList.remove("white")
+            temp.classList.add("black")
+        }
     }
 }
 
@@ -85,102 +114,111 @@ for (let i = 1; i <= 64; i++) {
     })
 }
 
-function checkValid(piece, square) {
-    return true
-}
-
 function squareClicked(clickedSquare) {
     let square = document.getElementById(clickedSquare)
     let squareNumber = Number(square.id)
-    let piece = square.children
-    if (!piece.length) return
-    piece = piece[0].src.split("pictures/")[1].split(".png")[0]
 
-    let y = Math.floor((squareNumber - 1) / 8)
-    let x = Math.ceil(squareNumber - 8 * y) - 1
+    if (square.classList.contains("available")) {
+        let y = Math.floor((squareNumber - 1) / 8)
+        let x = Math.ceil(squareNumber - 8 * y) - 1
 
-    let moves = []
-    if (piece == "wpawn" || piece == "bpawn") {
-        if ((turn == "white" && wtorpedo[x]) || (turn == "black" && btorpedo[x])) {
-            moves = [[0, 1], [0, 2]]
-        }
-        else {
-            moves = [[0, 1]]
-        }
-    }
-    else if (piece == "wrook" || piece == "brook") {
-        for (let i = x + 1; i <= 7; i++) {
-            if (board[i][y] != "empty") {
-                break
-            }
-            moves.push([i - x, 0])
-        }
-        for (let i = x - 1; i >= 0; i--) {
-            if (board[i][y] != "empty") {
-                break
-            }
-            moves.push([i - x, 0])
-        }
-        for (let i = y + 1; i <= 7; i++) {
-            if (board[x][i] != "empty") {
-                break
-            }
-            moves.push([0, i - y])
-        }
-        for (let i = y - 1; i >= 0; i--) {
-            if (board[x][i] != "empty") {
-                break
-            }
-            moves.push([0, i - y])
-        }
-    }
-    else if (piece == "wknight" || piece == "bknight") {
-        moves = [-17, -15, -10, -6, 6, 10, 15, 17]
-    }
-    else if (piece == "wbishop" || piece == "bbishop") {
-        moves = [-63, -54, -49, -45, -42, -36, -35, -28, -27, -21, -18, -14, -9, -7, 7, 9, 14, 18, 21, 27, 28, 35, 36, 42, 45, 49, 54, 63]
-    } else if (piece == "wqueen" || piece == "bqueen") {
-        moves = [-56, -48, -40, -32, -24, -16, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 16, 24, 32, 40, 48, 56, -63, -54, -49, -45, -42, -36, -35, -28, -27, -21, -18, -14, -9, -7, 7, 9, 14, 18, 21, 27, 28, 35, 36, 42, 45, 49, 54, 63]
-    }
-    else if (piece == "wking" || piece == "bking") {
-        moves = [-9, -8, -7, -1, 1, 7, 8, 9]
-    }
+        board[x][y] = board[selectedPiece[0]][selectedPiece[1]]
+        board[selectedPiece[0]][selectedPiece[1]] = "empty"
+        displayBoard()
 
-    if (selectedPiece[0] != x || selectedPiece[1] != y && !isNaN(selectedPiece[0])) {
-        for (let i = 1; i <= 64; i++) {
-            let temp = document.getElementById(i)
-
-            temp.classList.remove("available")
-            if ((i + Math.floor((i - 1) / 8)) % 2 == 0) {
-                temp.classList.remove("black")
-                temp.classList.add("white")
-            }
-            else {
-                temp.classList.remove("white")
-                temp.classList.add("black")
-            }
-        }
-    }
-
-    if (isNaN(selectedPiece[0]) && moves.length != 0) {
-        selectedPiece = [x, y]
-        for (let i = 0; i < moves.length; i++) {
-            let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
-            availableSquare.classList.remove("white")
-            availableSquare.classList.remove("black")
-            availableSquare.classList.add("available")
-        }
-    }
-    else if(moves.length != 0){
         selectedPiece = [NaN, NaN]
-        for (let i = 0; i < moves.length; i++) {
-            let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
-            availableSquare.classList.remove("available")
-            if ((x + y + moves[i][0] + moves[i][1]) % 2 == 0) {
-                availableSquare.classList.add("black")
+    }
+    else {
+        let piece = square.children
+        if (!piece.length) return
+        piece = piece[0].src.split("pictures/")[1].split(".png")[0]
+
+        let y = Math.floor((squareNumber - 1) / 8)
+        let x = Math.ceil(squareNumber - 8 * y) - 1
+
+        let moves = []
+        if (piece == "wpawn" || piece == "bpawn") {
+            if ((turn == "white" && wtorpedo[x]) || (turn == "black" && btorpedo[x]) && board[x][y + 1] == "empty" && board[x][y + 2] == "empty") {
+                moves = [[0, 1], [0, 2]]
             }
-            else {
-                availableSquare.classList.add("white")
+            else if(board[x][y + 1] == "empty") {
+                moves = [[0, 1]]
+            }
+        }
+        else if (piece == "wrook" || piece == "brook") {
+            for (let i = x + 1; i <= 7; i++) {
+                if (board[i][y] != "empty") {
+                    break
+                }
+                moves.push([i - x, 0])
+            }
+            for (let i = x - 1; i >= 0; i--) {
+                if (board[i][y] != "empty") {
+                    break
+                }
+                moves.push([i - x, 0])
+            }
+            for (let i = y + 1; i <= 7; i++) {
+                if (board[x][i] != "empty") {
+                    break
+                }
+                moves.push([0, i - y])
+            }
+            for (let i = y - 1; i >= 0; i--) {
+                if (board[x][i] != "empty") {
+                    break
+                }
+                moves.push([0, i - y])
+            }
+        }
+        else if (piece == "wknight" || piece == "bknight") {
+            moves = [-17, -15, -10, -6, 6, 10, 15, 17]
+        }
+        else if (piece == "wbishop" || piece == "bbishop") {
+            moves = [-63, -54, -49, -45, -42, -36, -35, -28, -27, -21, -18, -14, -9, -7, 7, 9, 14, 18, 21, 27, 28, 35, 36, 42, 45, 49, 54, 63]
+        } else if (piece == "wqueen" || piece == "bqueen") {
+            moves = [-56, -48, -40, -32, -24, -16, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 16, 24, 32, 40, 48, 56, -63, -54, -49, -45, -42, -36, -35, -28, -27, -21, -18, -14, -9, -7, 7, 9, 14, 18, 21, 27, 28, 35, 36, 42, 45, 49, 54, 63]
+        }
+        else if (piece == "wking" || piece == "bking") {
+            moves = [-9, -8, -7, -1, 1, 7, 8, 9]
+        }
+
+        if (selectedPiece[0] != x || selectedPiece[1] != y && !isNaN(selectedPiece[0])) {
+            for (let i = 1; i <= 64; i++) {
+                let temp = document.getElementById(i)
+
+                temp.classList.remove("available")
+                if ((i + Math.floor((i - 1) / 8)) % 2 == 0) {
+                    temp.classList.remove("black")
+                    temp.classList.add("white")
+                }
+                else {
+                    temp.classList.remove("white")
+                    temp.classList.add("black")
+                }
+            }
+        }
+
+        if (isNaN(selectedPiece[0]) && moves.length != 0) {
+            selectedPiece = [x, y]
+            for (let i = 0; i < moves.length; i++) {
+                let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
+                availableSquare.classList.remove("white")
+                availableSquare.classList.remove("black")
+                availableSquare.classList.add("available")
+            }
+        }
+        else if (moves.length != 0) {
+            selectedPiece = [NaN, NaN]
+            for (let i = 0; i < moves.length; i++) {
+                let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
+                availableSquare.classList.remove("available")
+                if ((x + y + moves[i][0] + moves[i][1]) % 2 == 0) {
+                    availableSquare.classList.add("black")
+                }
+                else {
+                    availableSquare.classList.add("white")
+                }
             }
         }
     }

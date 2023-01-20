@@ -62,6 +62,7 @@ for (let i = 0; i < 8; i++) {
             pic.id = "pic" + square.id
             pic.className = "piece"
             square.appendChild(pic)
+            square.style.cursor = "pointer"
         }
 
         row.appendChild(square)
@@ -74,6 +75,7 @@ let wcastle = [true, true]
 let bcastle = [false, false]
 let wtorpedo = [true, true, true, true, true, true, true, true]
 let btorpedo = [true, true, true, true, true, true, true, true]
+let selectedPiece = [NaN, NaN]
 
 // Get possible moves
 for (let i = 1; i <= 64; i++) {
@@ -108,25 +110,25 @@ function squareClicked(clickedSquare) {
     }
     else if (piece == "wrook" || piece == "brook") {
         for (let i = x + 1; i <= 7; i++) {
-            if(board[i][y] != "empty"){
+            if (board[i][y] != "empty") {
                 break
             }
             moves.push([i - x, 0])
         }
         for (let i = x - 1; i >= 0; i--) {
-            if(board[i][y] != "empty"){
+            if (board[i][y] != "empty") {
                 break
             }
             moves.push([i - x, 0])
         }
         for (let i = y + 1; i <= 7; i++) {
-            if(board[x][i] != "empty"){
+            if (board[x][i] != "empty") {
                 break
             }
             moves.push([0, i - y])
         }
         for (let i = y - 1; i >= 0; i--) {
-            if(board[x][i] != "empty"){
+            if (board[x][i] != "empty") {
                 break
             }
             moves.push([0, i - y])
@@ -144,10 +146,54 @@ function squareClicked(clickedSquare) {
         moves = [-9, -8, -7, -1, 1, 7, 8, 9]
     }
 
-    for(let i = 0; i < moves.length; i++){
-        let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
-        availableSquare.classList.remove("white")
-        availableSquare.classList.remove("black")
-        availableSquare.classList.add("available")
+    if (selectedPiece[0] != x || selectedPiece[1] != y && !isNaN(selectedPiece[0])) {
+        for (let i = 1; i <= 64; i++) {
+            let temp = document.getElementById(i)
+
+            console.log(i, Math.floor(i % 8))
+            temp.classList.remove("available")
+            if ((i + Math.floor(i % 8)) % 2 == 0) {
+                temp.classList.remove("black")
+                temp.classList.add("white")
+            }
+            else {
+                temp.classList.remove("white")
+                temp.classList.add("black")
+            }
+
+            // let row = (Math.floor(id % 8)) % 2
+            // console.log(id, row)
+            // if ((row + Math.floor(id % 8)) % 2 == 0) {
+            //     temp.classList.add("black")
+            //     temp.classList.remove("white")
+            // }
+            // else {
+            //     temp.classList.add("white")
+            //     temp.classList.remove("black")
+            // }
+        }
     }
+
+    // if (isNaN(selectedPiece[0])) {
+    //     selectedPiece = [x, y]
+    //     for (let i = 0; i < moves.length; i++) {
+    //         let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
+    //         availableSquare.classList.remove("white")
+    //         availableSquare.classList.remove("black")
+    //         availableSquare.classList.add("available")
+    //     }
+    // }
+    // else{
+    //     selectedPiece = [NaN, NaN]
+    //     for (let i = 0; i < moves.length; i++) {
+    //         let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
+    //         availableSquare.classList.remove("available")
+    //         if ((x + y + moves[i][0] + moves[i][1]) % 2 == 0) {
+    //             availableSquare.classList.add("black")
+    //         }
+    //         else {
+    //             availableSquare.classList.add("white")
+    //         }
+    //     }
+    // }
 }

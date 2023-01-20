@@ -150,9 +150,8 @@ function squareClicked(clickedSquare) {
         for (let i = 1; i <= 64; i++) {
             let temp = document.getElementById(i)
 
-            console.log(i, Math.floor(i % 8))
             temp.classList.remove("available")
-            if ((i + Math.floor(i % 8)) % 2 == 0) {
+            if ((i + Math.floor((i - 1) / 8)) % 2 == 0) {
                 temp.classList.remove("black")
                 temp.classList.add("white")
             }
@@ -160,40 +159,29 @@ function squareClicked(clickedSquare) {
                 temp.classList.remove("white")
                 temp.classList.add("black")
             }
-
-            // let row = (Math.floor(id % 8)) % 2
-            // console.log(id, row)
-            // if ((row + Math.floor(id % 8)) % 2 == 0) {
-            //     temp.classList.add("black")
-            //     temp.classList.remove("white")
-            // }
-            // else {
-            //     temp.classList.add("white")
-            //     temp.classList.remove("black")
-            // }
         }
     }
 
-    // if (isNaN(selectedPiece[0])) {
-    //     selectedPiece = [x, y]
-    //     for (let i = 0; i < moves.length; i++) {
-    //         let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
-    //         availableSquare.classList.remove("white")
-    //         availableSquare.classList.remove("black")
-    //         availableSquare.classList.add("available")
-    //     }
-    // }
-    // else{
-    //     selectedPiece = [NaN, NaN]
-    //     for (let i = 0; i < moves.length; i++) {
-    //         let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
-    //         availableSquare.classList.remove("available")
-    //         if ((x + y + moves[i][0] + moves[i][1]) % 2 == 0) {
-    //             availableSquare.classList.add("black")
-    //         }
-    //         else {
-    //             availableSquare.classList.add("white")
-    //         }
-    //     }
-    // }
+    if (isNaN(selectedPiece[0]) && moves.length != 0) {
+        selectedPiece = [x, y]
+        for (let i = 0; i < moves.length; i++) {
+            let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
+            availableSquare.classList.remove("white")
+            availableSquare.classList.remove("black")
+            availableSquare.classList.add("available")
+        }
+    }
+    else if(moves.length != 0){
+        selectedPiece = [NaN, NaN]
+        for (let i = 0; i < moves.length; i++) {
+            let availableSquare = document.getElementById(squareNumber + moves[i][0] + (moves[i][1] * 8))
+            availableSquare.classList.remove("available")
+            if ((x + y + moves[i][0] + moves[i][1]) % 2 == 0) {
+                availableSquare.classList.add("black")
+            }
+            else {
+                availableSquare.classList.add("white")
+            }
+        }
+    }
 }

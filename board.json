@@ -1,0 +1,194 @@
+{
+ "1": {
+  "piece": "wrook"
+ },
+ "2": {
+  "piece": "wknight"
+ },
+ "3": {
+  "piece": "wbishop"
+ },
+ "4": {
+  "piece": "wqueen"
+ },
+ "5": {
+  "piece": "wking"
+ },
+ "6": {
+  "piece": "wbishop"
+ },
+ "7": {
+  "piece": "wknight"
+ },
+ "8": {
+  "piece": "wrook"
+ },
+ "9": {
+  "piece": "wpawn"
+ },
+ "10": {
+  "piece": "wpawn"
+ },
+ "11": {
+  "piece": "wpawn"
+ },
+ "12": {
+  "piece": "wpawn"
+ },
+ "13": {
+  "piece": "wpawn"
+ },
+ "14": {
+  "piece": "wpawn"
+ },
+ "15": {
+  "piece": "wpawn"
+ },
+ "16": {
+  "piece": "wpawn"
+ },
+ "17": {
+  "piece": "empty"
+ },
+ "18": {
+  "piece": "empty"
+ },
+ "19": {
+  "piece": "empty"
+ },
+ "20": {
+  "piece": "empty"
+ },
+ "21": {
+  "piece": "empty"
+ },
+ "22": {
+  "piece": "empty"
+ },
+ "23": {
+  "piece": "empty"
+ },
+ "24": {
+  "piece": "empty"
+ },
+ "25": {
+  "piece": "empty"
+ },
+ "26": {
+  "piece": "empty"
+ },
+ "27": {
+  "piece": "empty"
+ },
+ "28": {
+  "piece": "empty"
+ },
+ "29": {
+  "piece": "empty"
+ },
+ "30": {
+  "piece": "empty"
+ },
+ "31": {
+  "piece": "empty"
+ },
+ "32": {
+  "piece": "empty"
+ },
+ "33": {
+  "piece": "empty"
+ },
+ "34": {
+  "piece": "empty"
+ },
+ "35": {
+  "piece": "empty"
+ },
+ "36": {
+  "piece": "empty"
+ },
+ "37": {
+  "piece": "empty"
+ },
+ "38": {
+  "piece": "empty"
+ },
+ "39": {
+  "piece": "empty"
+ },
+ "40": {
+  "piece": "empty"
+ },
+ "41": {
+  "piece": "empty"
+ },
+ "42": {
+  "piece": "empty"
+ },
+ "43": {
+  "piece": "empty"
+ },
+ "44": {
+  "piece": "empty"
+ },
+ "45": {
+  "piece": "empty"
+ },
+ "46": {
+  "piece": "empty"
+ },
+ "47": {
+  "piece": "empty"
+ },
+ "48": {
+  "piece": "empty"
+ },
+ "49": {
+  "piece": "bpawn"
+ },
+ "50": {
+  "piece": "bpawn"
+ },
+ "51": {
+  "piece": "bpawn"
+ },
+ "52": {
+  "piece": "bpawn"
+ },
+ "53": {
+  "piece": "bpawn"
+ },
+ "54": {
+  "piece": "bpawn"
+ },
+ "55": {
+  "piece": "bpawn"
+ },
+ "56": {
+  "piece": "bpawn"
+ },
+ "57": {
+  "piece": "brook"
+ },
+ "58": {
+  "piece": "bknight"
+ },
+ "59": {
+  "piece": "bbishop"
+ },
+ "60": {
+  "piece": "bqueen"
+ },
+ "61": {
+  "piece": "bking"
+ },
+ "62": {
+  "piece": "bbishop"
+ },
+ "63": {
+  "piece": "bknight"
+ },
+ "64": {
+  "piece": "brook"
+ }
+}

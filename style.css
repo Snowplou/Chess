@@ -6,8 +6,8 @@
 }
 
 .piece {
-    width: 8vmin;
-    height: 8vmin;
+    width: 10vmin;
+    height: 10vmin;
 }
 
 .square {
@@ -29,6 +29,10 @@
     background-color: saddlebrown;
 }
 
+.available {
+    background-color: green;
+}
+
 .row {
     display: flex;
     justify-content: center;
@@ -39,11 +43,3 @@
     margin-right: auto;
     width: 90vmin;
 }
-
-.dot {
-    height: 25px;
-    width: 25px;
-    background-color: green;
-    border-radius: 50%;
-    display: inline-block;
-  }
